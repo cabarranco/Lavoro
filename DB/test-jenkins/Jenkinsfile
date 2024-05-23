@@ -1,0 +1,176 @@
+def FILE=""
+def PATH=""
+def GENERATE_TAG=""
+pipeline {
+    agent any
+    environment {
+        REPO_NAME="test-jenkins"
+        REPO_SSH_URL="ssh://git@stash.gto.intranet.db.com:7998/aia/test-jenkins.git"
+        BB_API_BASE_URL="https://stash.gto.intranet.db.com:8082/rest/api/1.0"
+        BB_API_PROJECT_URL="$BB_API_BASE_URL/projects/AIA/repos/$REPO_NAME"
+        PROJECT_FOLDER_NAME="test_jenkins"
+        AIAPY_FOLDER_PATH="AIAPy"
+        
+        PROJECT_FOLDER_PATH="$AIAPY_FOLDER_PATH/$PROJECT_FOLDER_NAME"
+        BIN_FOLDER_PATH="$AIAPY_FOLDER_PATH/bin"
+        BUILD_AND_UPLOAD_PATH="$BIN_FOLDER_PATH/build_and_upload"
+        COMMON_PATH="$BIN_FOLDER_PATH/common"
+        CREATE_MERGE_PR_PATH="$BIN_FOLDER_PATH/pr_automation/bin"
+        TEST_FOLDER_PATH="$PROJECT_FOLDER_PATH/test"
+        TMP_FOLDER_PATH="/tmp"
+        
+        CONDA_ENV_NAME="dev37"
+        CONDA_ENV_FOLDER="/home/conda/$CONDA_ENV_NAME"
+        
+        BUILD_DETAILS="Jenkins Build: ${currentBuild.fullDisplayName}"
+        EMAIL_RECIPIENTS="carloalbertobarranco@gmail.com"
+        EMAIL_MIME_TYPE="text/html"
+        ARTIFACTORY_CREDS = credentials('98unfcio...') // key
+        
+        // Credentials for PR Automation
+        AIA_PR_AUTHOR = credentials('12unfcio...') // key
+        AIA_PR_REVIEWER_1 = credentials('aiajenkins1')
+        AIA_PR_REVIEWER_2 = credentials('aiajenkins2')
+        
+        SOURCE_BRANCH="develop"
+        DESTINATION_BRANCH="release"
+    }
+    stages {
+        stage('Test') {
+            steps {
+                echo "Running unit tests..."
+                
+                // Activate environment, then run tests
+                sh '''
+                    source $CONDA_ENV_FOLDER/bin/activate
+                    python -m pytest $TEST_FOLDER_PATH
+                '''
+            }
+        }
+        stage('Tag') {
+            when {
+                expression {
+                    BRANCH_NAME == "develop"
+                }
+            }
+            steps {
+                sh '''
+                    rm -rf $TMP_FOLDER_PATH/$REPO_NAME
+                    cd $TMP_FOLDER_PATH
+                    git clone $REPO_SSH_URL
+                '''
+                script {
+                    GENERATE_TAG=sh(script: "$BUILD_AND_UPLOAD_PATH/get_latest_tag.sh",
+                    returnStdout: true).trim()
+                    echo "TAG $GENERATE_TAG"
+                }
+                sh '''
+                    cd $TMP_FOLDER_PATH/$REPO_NAME
+                    git checkout $BRANCH_NAME
+                    git tag -a $GENERATE_TAG -m "Version: $GENERATE_TAG"
+                    git push origin $BRANCH_NAME $GENERATE_TAG
+                    echo Pushed Latest Tag $GENERATE_TAG
+                '''
+            }
+        }
+        stage('Build') {
+            environment {
+                LATEST_TAG = sh(script: "echo $GENERATE_TAG", returnStdout: true).trim()
+            }
+            when {
+                expression {
+                    BRANCHNAME == "develop"
+                }
+            }
+            steps {
+                sh '''
+                cd $TMP_FOLDER_PATH/$REPO_NAME
+                git checkout $BRANCH_NAME
+                source $COMMON_PATH/logging.sh
+                special_echo "Building Package" "$$" "build_package.sh"
+                $BUILD_AND_UPLOAD_PATH/build_package.sh
+                '''
+                script {
+                    def (String file, String path) =
+                        sh(script : "$BUILD_AND_UPLOAD_PATH/verify_build_package.sh $LATEST_TAG", returnStdout: true)
+                        .trim().tokenize("\n")
+                    if (file == null || path == null) {
+                        echo "Build failed! Please try again"
+                        currentBuild.result = 'FAILURE'
+                        error("Build Failed")
+                    } else {
+                        echo "Build was successful! Tar file $file"
+                        echo "Build can be found in this folder: $path"
+                        FILE = file
+                        PATH = path
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            envirnment {
+                TAR_GZ_FILE = sh(script: "echo $FILE", returnStdout: true).trim()
+                TAR_GZ_FILE_PATH = sh(script: "echo $PATH", returnStdout: true).trim()
+                ARTIFACTORY_AIA_REC_URL="https://artifactory.intranet.db.com/artifactory/mvn-private-local/com/db/aia-rec"
+                JSON_PATH="$TMP_FOLDER_PATH/$REPO_NAME/$CREATE_MERGE_PR_PATH/../conf/pr.json"
+                SILENT=sh(script: "echo \$(python $TMP_FOLDER_PATH/$REPO_NAME/$CREATE_MERGE_PR_PATH/python/extract_json.py \
+                         --path-to-file $JSON_PATH \
+                         --key silent_response \
+                         --calling-from-bash True)", returnStdout: true).trim()
+                ENCODE_USERNAME_PASSWORD_AUTHOR=sh(script: "echo -n $AIA_PR_AUTHOR_USR:$AIA_PR_AUTHOR_PSW | base64",
+                                                  returnStdout: true).trim()
+            }
+            when {
+                expression {
+                    BRANCH_NAME == "develop"
+                }
+            }
+            steps {
+                sh '''
+                    cd $TMP_FOLDER_PATH/$REPO_NAME
+                    git checkout $BRANCH_NAME
+                    source $COMMON_PATH/logging.sh
+                    $BUILD_AND_UPLOAD_PATH/upload_to_artifactory.sh
+                    source $CREATE_MERGE_PR_PATH/common.sh
+                    $CREATE_MERGE_PR_PATH/create_pr.sh $AIA_PR_REVIEWER_1_USR,$AIA_PR_REVIEWER_2_USR
+                '''
+            }
+        }
+        stage('Release') {
+            when {
+                changeRequest target: 'release'
+            }
+            steps {
+                // Check for conflict
+                // Add comment
+                // Approve pr
+                // Check for merge status
+                // MErge pr
+                sh '''
+                    source $CREATE_MERGE_PR_PATH/common.sh
+                    source $COMMON_PATH/logging.sh
+                    $CREATE_MERGE_PR_PATH/pr_approval_merge_automation.sh \
+                    "$AIA_PR_REVIEWER_1_USR,$AIA_PR_REVIEWER_2_USR"
+                '''
+            }
+        }
+    }
+    post {
+        always {
+            // Deactivate the environment
+            sh '''source deactivate
+            '''
+            bitbucketStatusNotify(buildState: currentBuild.result)
+            
+            // Send email
+            mail subject: "$BUILD_DETAILS, Result: ${currentBuild.result}",
+                to: "$MAIL_RECIPIENTS",
+                mimeType: "$EMAIL_MIME_TYPE",
+                body: "$BUILD_DETAILS<br />Result: ${currentBuild}<br /><br />Check console output at: $BUILD_URL to view details."
+            // if success, then trigger Airflow dag
+            // airflow test succeeds
+            // create PR merge to release
+            // deploy-to-release.sh <tag> <Comment>
+        }
+    }
+}

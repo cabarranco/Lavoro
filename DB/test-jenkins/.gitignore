@@ -1,0 +1,7 @@
+__pychache__/
+.csv
+.xls
+.ipynb
+.ipynb_checkpoints
+*.log
+*.env

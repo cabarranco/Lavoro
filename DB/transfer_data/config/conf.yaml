@@ -1,0 +1,57 @@
+# JDBC connection
+connection:
+  jdbc:
+    impala:
+      prefix: "jdbc:impala://"
+      database: pc_aiab_analysis
+      auth_mechanism: "3"
+      ssl: "1"
+      driver: "com.cloudera.impala.jdbc41.Driver"
+    hive:
+      prefix: "jdbc:hive://"
+      database: pc_aiab_analysis
+      auth_mechanism: "3"
+      ssl: "1"
+      driver: "com.cloudera.hive.jdbc41.HS2Driver"
+
+# EAP environment details
+env:
+  uat:
+    impala:
+      host: "sdl-impala-uat.gslb.db.com"
+      port: 21050
+      resource_pool: "root.GTB.ACE-S-FRA-EAP-PROD-PC_AIA"
+    hive:
+      host: "sdl-hive-uat.gslb.db.com"
+      port: 10000
+      resource_pool: "root.GTB.ACE-S-FRA-EAP-PROD-PC_AIA"
+    hdfs:
+      host: "frasadlcsappu22.de.db.com"
+      port: 8020
+      resource_pool: "/project/aia/ctb/private/databases"
+  prod:
+    impala:
+      host: "datalab-impala.de.db.com"
+      port: 21050
+      resource_pool: "root.ACE-S-FRA-EAP-PROD-PC_AIA"
+    hive:
+      host: "datalab-hive.de.db.com"
+      port: 10000
+      resource_pool: "root.ACE-S-FRA-EAP-PROD-PC_AIA"
+    hdfs:
+      host: "default"
+      port: 8020
+      resource_pool: "/project/aia/ctb/private/databases"
+  preprod:
+    impala:
+      host: "datalab-impala.de.db.com"
+      port: 21050
+      resource_pool: "root.ACE-S-FRA-EAP-PROD-PC_AIAB"
+    hive:
+      host: "datalab-hive.de.db.com"
+      port: 10000
+      resource_pool: "root.ACE-S-FRA-EAP-PROD-PC_AIAB"
+    hdfs:
+      host: "default"
+      port: 8020
+      resource_pool: "/project/aiab/ctb/private/databases"
