@@ -1,0 +1,108 @@
+
+  {
+    "strategyId": "VQS03MOCS-MO.H.B-PROD_1.3",
+    "allocatorId": "VQS.ALL.B",
+    "hedgeStrategyId": "",
+    "eventCriteria": {
+      "type": "Soccer",
+      "includeCompetitions": [
+        "UEFA Champions League Qualifiers",
+        "English Championship",
+        "French Ligue 1",
+        "German Bundesliga 2",
+        "Japanese J League",
+        "Spanish Segunda Division",
+        "Brazilian Serie B",
+        "English League 1",
+        "Russian Premier League",
+        "Greek Super League",
+        "English League 2",
+        "US Major League Soccer",
+        "Finnish Veikkausliiga",
+        "Portuguese Primeira Liga",
+        "CONMEBOL Copa Libertadores",
+        "Italian Serie B",
+        "Brazilian Serie A",
+        "UEFA Europa League Qualifiers",
+        "Swedish Allsvenskan",
+        "Ukrainian Super Cup",
+        "Scottish FA Cup",
+        "Croatian Playoffs",
+        "Portuguese League Cup",
+        "MLS is Back Tournament",
+        "German Playoff",
+        "Brazilian Copa do Nordeste",
+        "Elite Friendlies",
+        "FIFA World Cup Qualifiers",
+        "Japanese J League Cup",
+        "Australian A-League",
+        "German Cup",
+        "Brazilian Cup",
+        "English FA Cup",
+        "AFC Champions League",
+        "Friendlies International",
+        "Irish Premier Division",
+        "English Football League Cup",
+        "Scottish Premiership",
+        "Dutch Eredivisie",
+        "Austrian Bundesliga",
+        "Danish Superliga",
+        "UEFA U21 Euro Qualifiers",
+        "Swiss Super League",
+        "Belgian First Division A",
+        "French Ligue 2",
+        "Chinese Super League",
+        "Turkish Super League",
+        "Norwegian Eliteserien"
+      ],
+      "live": true,
+      "startFromKickOff": 1,
+      "endFromKickOff": 25,
+      "currentLiveScores": [
+        "0-0"
+      ],
+      "preLive": false
+    },
+    "bookRunnersCompute": [
+      "MO.H.B",
+      "CS.00.B",
+      "CS.01.B"
+    ],
+    "bookRunnersAllocator": [
+      "MO.H.B",
+      "CS.00.B",
+      "CS.01.B"
+    ],
+    "strategyCriteria": {
+      "rules": [
+        {
+          "name": "RunnerSizeCriteria",
+          "vars": [
+            "CS.00.B",
+            "MO.H.B",
+            "CS.01.B"
+          ],
+          "type": "size",
+          "expr": "CS.00.B gt 0 AND MO.H.B ge 8 AND CS.01.B gt 0"
+        },
+        {
+          "name": "RunnerOddCriteria",
+          "vars": [
+            "CS.00.B",
+            "CS.01.B"
+          ],
+          "type": "odd",
+          "expr": "CS.00.B gt 0 AND CS.01.B gt 0"
+        },
+        {
+          "name": "SipCriteria",
+          "vars": [
+            "MO.H.B",
+            "SIP"
+          ],
+          "type": "odd",
+          "expr": "(MO.H.B le 3.25 AND SIP le 0.44) OR (MO.H.B le 2.38 AND (SIP le 0.56 AND SIP gt 0.44)) OR (MO.H.B le 1.93 AND (SIP le 0.6 AND SIP gt 0.56)) OR (MO.H.B le 1.66 AND (SIP le 0.65 AND SIP gt 0.6)) OR (MO.H.B gt 3.25 AND (SIP le 0.77 AND SIP gt 0.69)) OR (MO.H.B gt 3.8 AND SIP gt 0.77) OR (MO.H.B gt 4.9 AND (SIP le 0.69 AND SIP gt 0.52)) OR ((MO.H.B gt 2.18 AND MO.H.B le 2.38) AND (SIP le 0.72 AND SIP gt 0.69)) OR ((MO.H.B gt 2.62 AND MO.H.B le 2.94) AND (SIP le 0.6 AND SIP gt 0.56))"
+        }
+      ]
+    }
+  }

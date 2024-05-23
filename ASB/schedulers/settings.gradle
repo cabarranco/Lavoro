@@ -1,0 +1,4 @@
+rootProject.name = 'analytics'
+include 'api'
+include 'domain'
+

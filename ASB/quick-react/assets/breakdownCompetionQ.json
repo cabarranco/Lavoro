@@ -1,0 +1,52 @@
+{
+	"storedEventsAvg": [
+		43
+	],
+	"storedEventsLeagueMax": [
+		65
+	],
+	"storedEventsLeagueSplit": {
+		"Serie A": [
+			13,
+			19,
+			26,
+			7
+		],
+		"Primera Liga": [
+			6,
+			17,
+			35,
+			null
+		],
+		"Bundesliga": [
+			3,
+			6,
+			26,
+			23
+		],
+		"Ligue 1": [
+			25,
+			13,
+			2,
+			2
+		],
+		"Premier League": [
+			19,
+			8,
+			4,
+			8
+		],
+		"Eredivisie": [
+			5,
+			8,
+			10,
+			2
+		],
+		"Liga Portuguesa": [
+			3,
+			4,
+			5,
+			3
+		]
+	}
+}

@@ -1,0 +1,8 @@
+import quickview.backend.Testina
+
+model {
+	Iterable<Testina> testinaList
+}
+
+json tmpl.testina(testinaList ?: [])
+

@@ -1,0 +1,11 @@
+GET {{base_url}}
+
+###
+
+GET {{base_url}}/testina
+
+###
+
+GET {{base_url}}/testina/create
+
+###

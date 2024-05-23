@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+}
+
+group 'com.asb.analytics'
+version '1.2-SNAPSHOT'
+
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+//create a Jar for Main class with all dependencies
+task bootstrapperJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Bootstrapper bet store',
+                'Implementation-Version': version,
+                'Main-Class': 'com.asb.analytics.Bootstrapper'
+    }
+    baseName = 'bootstrapper'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+//create a Jar for CleanFakeGoals class with all dependencies
+task eventUpdatesJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Bet store event updates collector',
+                'Implementation-Version': version,
+                'Main-Class': 'com.asb.analytics.MainEventUpdates'
+    }
+    baseName = 'event-updates'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+//create a Jar for AccountBalanceCalculator class with all dependencies
+task analyticsJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Betstore odd sizes collector',
+                'Implementation-Version': version,
+                'Main-Class': 'com.asb.analytics.MainAnalytics'
+    }
+    baseName = 'analytics'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile project(':api')
+
+    compile group: 'com.github.afbjorklund.gradle.caching.memcached', name: 'gradle-memcached-plugin', version: '0.10'
+    compile group: 'org.mongodb', name: 'mongo-java-driver', version: '3.12.2'
+    compile group: 'com.google.cloud', name: 'google-cloud-bigquery', version: '1.110.0'
+    compile group: 'com.google.cloud', name: 'google-cloud-storage', version: '1.106.0'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

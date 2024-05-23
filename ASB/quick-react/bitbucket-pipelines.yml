@@ -1,0 +1,24 @@
+image: node:12
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Build
+          caches:
+            - node
+          script:
+            - npm i
+            - npm run build
+          artifacts:
+            - build/**
+      - step:
+         name: Deploy to PROD
+         deployment: production
+         script:
+           - pipe: atlassian/scp-deploy:0.3.3
+             variables:
+               USER: $DEPLOYMENT_USER
+               SERVER: $DEPLOYMENT_SERVER
+               REMOTE_PATH: $DEPLOYMENT_PATH
+               LOCAL_PATH: '${BITBUCKET_CLONE_DIR}/*'

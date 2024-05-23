@@ -1,0 +1,26 @@
+{
+  "name": "quick-backend",
+  "version": "1.0.0",
+  "description": "This is the RESTful APIs backend for the quick view",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://pl_claudio@bitbucket.org/ibf_capital/quick-backend.git"
+  },
+  "author": "Claudio Paolicelli - ASB Research",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/ibf_capital/quick-backend#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "@google-cloud/bigquery": "^4.7.0",
+    "express": "^4.17.1",
+    "http-debug": "^0.1.2",
+    "mongoose": "^5.9.7",
+    "request": "^2.88.2"
+  }
+}

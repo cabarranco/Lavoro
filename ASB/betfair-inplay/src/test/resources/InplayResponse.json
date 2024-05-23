@@ -1,0 +1,188 @@
+{
+  "eventId": 29880024,
+  "eventTypeId": 1,
+  "score": {
+    "home": {
+      "name": "Albirex Niigata",
+      "score": "3",
+      "halfTimeScore": "2",
+      "fullTimeScore": "3",
+      "penaltiesScore": "",
+      "penaltiesSequence": [],
+      "games": "",
+      "sets": "",
+      "numberOfYellowCards": 1,
+      "numberOfRedCards": 0,
+      "numberOfCards": 1,
+      "numberOfCorners": 10,
+      "numberOfCornersFirstHalf": 2,
+      "numberOfCornersSecondHalf": 8,
+      "bookingPoints": 10
+    },
+    "away": {
+      "name": "Kanazawa",
+      "score": "5",
+      "halfTimeScore": "4",
+      "fullTimeScore": "5",
+      "penaltiesScore": "",
+      "penaltiesSequence": [],
+      "games": "",
+      "sets": "",
+      "numberOfYellowCards": 1,
+      "numberOfRedCards": 0,
+      "numberOfCards": 1,
+      "numberOfCorners": 1,
+      "numberOfCornersFirstHalf": 1,
+      "numberOfCornersSecondHalf": 0,
+      "bookingPoints": 10
+    },
+    "numberOfYellowCards": 2,
+    "numberOfRedCards": 0,
+    "numberOfCards": 2,
+    "numberOfCorners": 11,
+    "numberOfCornersFirstHalf": 3,
+    "numberOfCornersSecondHalf": 8,
+    "bookingPoints": 20
+  },
+  "timeElapsed": 95,
+  "elapsedRegularTime": 90,
+  "elapsedAddedTime": 5,
+  "updateDetails": [
+    {
+      "updateTime": "2020-07-04T09:03:41.146Z",
+      "updateId": 10,
+      "matchTime": 1,
+      "elapsedRegularTime": 1,
+      "type": "KickOff",
+      "updateType": "KickOff"
+    },
+    {
+      "updateTime": "2020-07-04T09:08:08.081Z",
+      "updateId": 17,
+      "team": "home",
+      "teamName": "Albirex Niigata",
+      "matchTime": 5,
+      "elapsedRegularTime": 5,
+      "type": "Goal",
+      "updateType": "Goal"
+    },
+    {
+      "updateTime": "2020-07-04T09:12:11.155Z",
+      "updateId": 23,
+      "team": "away",
+      "teamName": "Kanazawa",
+      "matchTime": 9,
+      "elapsedRegularTime": 9,
+      "type": "Goal",
+      "updateType": "Goal"
+    },
+    {
+      "updateTime": "2020-07-04T09:20:45.868Z",
+      "updateId": 37,
+      "team": "away",
+      "teamName": "Kanazawa",
+      "matchTime": 18,
+      "elapsedRegularTime": 18,
+      "type": "Goal",
+      "updateType": "Goal"
+    },
+    {
+      "updateTime": "2020-07-04T09:26:56.787Z",
+      "updateId": 48,
+      "team": "away",
+      "teamName": "Kanazawa",
+      "matchTime": 24,
+      "elapsedRegularTime": 24,
+      "type": "Goal",
+      "updateType": "Goal"
+    },
+    {
+      "updateTime": "2020-07-04T09:36:21.348Z",
+      "updateId": 64,
+      "team": "away",
+      "teamName": "Kanazawa",
+      "matchTime": 33,
+      "elapsedRegularTime": 33,
+      "type": "Goal",
+      "updateType": "Goal"
+    },
+    {
+      "updateTime": "2020-07-04T09:38:40.082Z",
+      "updateId": 69,
+      "team": "home",
+      "teamName": "Albirex Niigata",
+      "matchTime": 35,
+      "elapsedRegularTime": 35,
+      "type": "Goal",
+      "updateType": "Goal"
+    },
+    {
+      "updateTime": "2020-07-04T09:53:00.444Z",
+      "updateId": 89,
+      "matchTime": 50,
+      "elapsedRegularTime": 45,
+      "elapsedAddedTime": 5,
+      "type": "FirstHalfEnd",
+      "updateType": "FirstHalfEnd"
+    },
+    {
+      "updateTime": "2020-07-04T10:07:43.495Z",
+      "updateId": 92,
+      "matchTime": 46,
+      "elapsedRegularTime": 46,
+      "type": "SecondHalfKickOff",
+      "updateType": "SecondHalfKickOff"
+    },
+    {
+      "updateTime": "2020-07-04T10:24:43.841Z",
+      "updateId": 120,
+      "team": "home",
+      "teamName": "Albirex Niigata",
+      "matchTime": 63,
+      "elapsedRegularTime": 63,
+      "type": "YellowCard",
+      "updateType": "YellowCard"
+    },
+    {
+      "updateTime": "2020-07-04T10:34:16.371Z",
+      "updateId": 135,
+      "team": "home",
+      "teamName": "Albirex Niigata",
+      "matchTime": 72,
+      "elapsedRegularTime": 72,
+      "type": "Goal",
+      "updateType": "Goal"
+    },
+    {
+      "updateTime": "2020-07-04T10:39:16.738Z",
+      "updateId": 141,
+      "team": "away",
+      "teamName": "Kanazawa",
+      "matchTime": 77,
+      "elapsedRegularTime": 77,
+      "type": "YellowCard",
+      "updateType": "YellowCard"
+    },
+    {
+      "updateTime": "2020-07-04T10:47:44.069Z",
+      "updateId": 153,
+      "team": "away",
+      "teamName": "Kanazawa",
+      "matchTime": 86,
+      "elapsedRegularTime": 86,
+      "type": "Goal",
+      "updateType": "Goal"
+    },
+    {
+      "updateTime": "2020-07-04T10:58:08.895Z",
+      "updateId": 174,
+      "matchTime": 96,
+      "elapsedRegularTime": 90,
+      "elapsedAddedTime": 6,
+      "type": "SecondHalfEnd",
+      "updateType": "SecondHalfEnd"
+    }
+  ],
+  "status": "COMPLETE",
+  "inPlayMatchStatus": "Finished"
+}

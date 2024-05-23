@@ -1,0 +1,394 @@
+[
+  {
+    "strategyId": "VQS02MOCS-MO.D.L-01",
+    "allocatorId": "VQS-MAIN.L",
+    "hedgeStrategyId": "",
+    "eventCriteria": {
+      "type": "Soccer",
+      "excludeCompetitions": [
+        "Reserve Friendlies",
+        "Women's Friendlies"
+      ],
+      "startFromKickOff": 1,
+      "endFromKickOff": 90,
+      "live": true,
+      "currentLiveScores": [
+        "0-0"
+      ],
+      "preLive": true
+    },
+    "bookRunnersCompute": [
+      "MO.D.L",
+      "CS.00.B"
+    ],
+    "bookRunnersAllocator": [
+      "MO.D.L",
+      "CS.00.B"
+    ],
+    "strategyCriteria": {
+      "rules": [
+        {
+          "name": "MO.D.L",
+          "type": "odd",
+          "value": "< 2.6"
+        },
+        {
+          "name": "SIP",
+          "type": "odd",
+          "value": "SIP < 0.91"
+        }
+      ]
+    }
+  },
+  {
+    "strategyId": "VQS04MOCS-MO.H.B-11",
+    "allocatorId": "VQS.ALL.B",
+    "hedgeStrategyId": "",
+    "eventCriteria": {
+      "type": "Soccer",
+      "excludeCompetitions": [
+        "Reserve Friendlies",
+        "Women's Friendlies"
+      ],
+      "startFromKickOff": 1,
+      "endFromKickOff": 90,
+      "live": true,
+      "currentLiveScores": [
+        "1-1"
+      ],
+      "preLive": false
+    },
+    "bookRunnersCompute": [
+      "MO.H.B",
+      "CS.11.B",
+      "CS.12.B",
+      "CS.22.B"
+    ],
+    "bookRunnersAllocator": [
+      "MO.H.B",
+      "CS.11.B",
+      "CS.12.B",
+      "CS.22.B"
+    ],
+    "strategyCriteria": {
+      "rules": [
+        {
+          "name": "MO.H.B",
+          "type": "odd",
+          "value": "< 2.52"
+        },
+        {
+          "name": "CS.11.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "CS.12.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "CS.22.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "SIP",
+          "type": "odd",
+          "value": "SIP < 1.1067969166 - (0.163282758 * MO.H.B)"
+        }
+      ]
+    }
+  },
+  {
+    "strategyId": "VQS03MOCS-MO.H.B-22",
+    "allocatorId": "VQS.ALL.B",
+    "hedgeStrategyId": "",
+    "eventCriteria": {
+      "type": "Soccer",
+      "excludeCompetitions": [
+        "Reserve Friendlies",
+        "Women's Friendlies"
+      ],
+      "startFromKickOff": 1,
+      "endFromKickOff": 90,
+      "live": true,
+      "currentLiveScores": [
+        "2-2"
+      ],
+      "preLive": false
+    },
+    "bookRunnersCompute": [
+      "MO.H.B",
+      "CS.22.B",
+      "CS.23.B"
+    ],
+    "bookRunnersAllocator": [
+      "MO.H.B",
+      "CS.22.B",
+      "CS.23.B"
+    ],
+    "strategyCriteria": {
+      "rules": [
+        {
+          "name": "MO.H.B",
+          "type": "odd",
+          "value": "< 2.52"
+        },
+        {
+          "name": "CS.22.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "CS.23.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "SIP",
+          "type": "odd",
+          "value": "SIP < 1.1067969166 - (0.163282758 * MO.H.B)"
+        }
+      ]
+    }
+  },
+  {
+    "strategyId": "VQS02OUCS-OU35.U.B-01",
+    "allocatorId": "VQS.ALL.B",
+    "hedgeStrategyId": "",
+    "eventCriteria": {
+      "type": "Soccer",
+      "excludeCompetitions": [
+        "Reserve Friendlies",
+        "Women's Friendlies"
+      ],
+      "startFromKickOff": 1,
+      "endFromKickOff": 90,
+      "live": true,
+      "currentLiveScores": [
+        "0-0"
+      ],
+      "preLive": true
+    },
+    "bookRunnersCompute": [
+      "CS.31.B",
+      "OU35.U.B"
+    ],
+    "bookRunnersAllocator": [
+      "OU35.U.B",
+      "CS.31.B"
+    ],
+    "strategyCriteria": {
+      "rules": [
+        {
+          "name": "OU35.U.B",
+          "type": "odd",
+          "value": "< 2.66"
+        },
+        {
+          "name": "CS.31.B",
+          "type": "odd",
+          "value": "> 27"
+        },
+        {
+          "name": "CS.31.B",
+          "type": "size",
+          "value": "> 4"
+        },
+        {
+          "name": "SIP",
+          "type": "odd",
+          "value": "SIP < 1"
+        }
+      ]
+    }
+  },
+  {
+    "strategyId": "VQS05MOCS-MO.H.B-01",
+    "allocatorId": "VQS.ALL.B",
+    "hedgeStrategyId": "",
+    "eventCriteria": {
+      "type": "Soccer",
+      "excludeCompetitions": [
+        "Reserve Friendlies",
+        "Women's Friendlies"
+      ],
+      "startFromKickOff": 1,
+      "endFromKickOff": 90,
+      "live": true,
+      "currentLiveScores": [
+        "0-0"
+      ],
+      "preLive": true
+    },
+    "bookRunnersCompute": [
+      "CS.00.B",
+      "CS.11.B",
+      "CS.01.B",
+      "CS.12.B",
+      "MO.H.B"
+    ],
+    "bookRunnersAllocator": [
+      "MO.H.B",
+      "CS.00.B",
+      "CS.11.B",
+      "CS.01.B",
+      "CS.12.B"
+    ],
+    "strategyCriteria": {
+      "rules": [
+        {
+          "name": "MO.H.B",
+          "type": "odd",
+          "value": "< 2.52"
+        },
+        {
+          "name": "CS.00.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "CS.01.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "CS.11.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "CS.12.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "SIP",
+          "type": "odd",
+          "value": "SIP < 1.1067969166-(0.163282758*MO.H.B)"
+        }
+      ]
+    }
+  },
+  {
+    "strategyId": "VQS03MOCS-MO.D.L-01",
+    "allocatorId": "VQS-MAIN.L",
+    "hedgeStrategyId": "",
+    "eventCriteria": {
+      "type": "Soccer",
+      "excludeCompetitions": [
+        "Reserve Friendlies",
+        "Women's Friendlies"
+      ],
+      "startFromKickOff": 1,
+      "endFromKickOff": 90,
+      "live": true,
+      "currentLiveScores": [
+        "0-0"
+      ],
+      "preLive": true
+    },
+    "bookRunnersCompute": [
+      "CS.00.B",
+      "CS.11.B",
+      "MO.D.L"
+    ],
+    "bookRunnersAllocator": [
+      "MO.D.L",
+      "CS.00.B",
+      "CS.11.B"
+    ],
+    "strategyCriteria": {
+      "rules": [
+        {
+          "name": "MO.D.L",
+          "type": "odd",
+          "value": "< 2.8"
+        },
+        {
+          "name": "CS.00.B",
+          "type": "size",
+          "value": "> 12"
+        },
+        {
+          "name": "CS.11.B",
+          "type": "size",
+          "value": "> 12"
+        },
+        {
+          "name": "SIP",
+          "type": "odd",
+          "value": "SIP < 0.93"
+        }
+      ]
+    }
+  },
+  {
+    "strategyId": "VQS05MOCS-MO.A.B-01",
+    "allocatorId": "VQS.ALL.B",
+    "hedgeStrategyId": "",
+    "eventCriteria": {
+      "type": "Soccer",
+      "excludeCompetitions": [
+        "Reserve Friendlies",
+        "Women's Friendlies"
+      ],
+      "startFromKickOff": 1,
+      "endFromKickOff": 90,
+      "live": true,
+      "currentLiveScores": [
+        "0-0"
+      ],
+      "preLive": true
+    },
+    "bookRunnersCompute": [
+      "CS.00.B",
+      "CS.11.B",
+      "CS.21.B",
+      "CS.10.B",
+      "MO.A.B"
+    ],
+    "bookRunnersAllocator": [
+      "MO.A.B",
+      "CS.00.B",
+      "CS.11.B",
+      "CS.21.B",
+      "CS.10.B"
+    ],
+    "strategyCriteria": {
+      "rules": [
+        {
+          "name": "MO.A.B",
+          "type": "odd",
+          "value": "< 2.55"
+        },
+        {
+          "name": "CS.00.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "CS.10.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "CS.11.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "CS.21.B",
+          "type": "size",
+          "value": "> 5"
+        },
+        {
+          "name": "SIP",
+          "type": "odd",
+          "value": "SIP < 1.0817969166-(0.166247543*MO.A.B)"
+        }
+      ]
+    }
+  }
+]

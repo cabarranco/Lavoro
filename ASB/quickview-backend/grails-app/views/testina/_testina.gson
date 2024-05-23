@@ -1,0 +1,7 @@
+import quickview.backend.Testina
+
+model {
+	Testina testina
+}
+
+json g.render(testina, [resolveTemplate: false])

@@ -1,0 +1,24 @@
+image: node:12
+
+pipelines:
+  branches:
+    master:
+      - step:
+         name: Deploy to PROD
+         deployment: production
+         script:
+           - pipe: atlassian/scp-deploy:0.3.3
+             variables:
+               USER: $DEPLOYMENT_USER
+               SERVER: $DEPLOYMENT_SERVER
+               REMOTE_PATH: $DEPLOYMENT_PATH
+               LOCAL_PATH: '${BITBUCKET_CLONE_DIR}/*'
+      - step:
+         name: Restart Process on PM2
+         script:
+           - pipe: atlassian/ssh-run:0.2.5
+             variables:
+               SSH_USER: $DEPLOYMENT_USER
+               SERVER: $DEPLOYMENT_SERVER
+               COMMAND: 'cd ${DEPLOYMENT_PATH}; npm i; pm2 restart ${DEPLOYMENT_PM2_PROCESS}'
+               MODE: 'command'

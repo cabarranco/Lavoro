@@ -1,0 +1,11 @@
+import quickview.backend.Testina
+
+model {
+    Testina firstX
+    Testina secondX
+}
+
+json {
+   first tmpl.Testina(firstX)
+   second tmpl.Testina(secondX)
+}

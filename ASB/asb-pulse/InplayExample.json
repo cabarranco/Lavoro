@@ -1,0 +1,121 @@
+[
+  {
+    "eventId": 29763513,
+    "eventTypeId": 1,
+    "score": {
+      "home": {
+        "name": "ART Municipal Jalapa",
+        "score": "0",
+        "halfTimeScore": "0",
+        "fullTimeScore": "",
+        "penaltiesScore": "",
+        "penaltiesSequence": [],
+        "games": "",
+        "sets": "",
+        "numberOfYellowCards": 2,
+        "numberOfRedCards": 0,
+        "numberOfCards": 2,
+        "numberOfCorners": 3,
+        "numberOfCornersFirstHalf": 3,
+        "numberOfCornersSecondHalf": 0,
+        "bookingPoints": 20
+      },
+      "away": {
+        "name": "Chinandega FC",
+        "score": "1",
+        "halfTimeScore": "1",
+        "fullTimeScore": "",
+        "penaltiesScore": "",
+        "penaltiesSequence": [],
+        "games": "",
+        "sets": "",
+        "numberOfYellowCards": 1,
+        "numberOfRedCards": 0,
+        "numberOfCards": 1,
+        "numberOfCorners": 0,
+        "numberOfCornersFirstHalf": 0,
+        "numberOfCornersSecondHalf": 0,
+        "bookingPoints": 10
+      },
+      "numberOfYellowCards": 3,
+      "numberOfRedCards": 0,
+      "numberOfCards": 3,
+      "numberOfCorners": 3,
+      "numberOfCornersFirstHalf": 3,
+      "numberOfCornersSecondHalf": 0,
+      "bookingPoints": 30
+    },
+    "timeElapsed": 46,
+    "elapsedRegularTime": 46,
+    "updateDetails": [
+      {
+        "updateTime": "2020-04-05T22:03:27.139Z",
+        "updateId": 9,
+        "matchTime": 1,
+        "elapsedRegularTime": 1,
+        "type": "KickOff",
+        "updateType": "KickOff"
+      },
+      {
+        "updateTime": "2020-04-05T22:08:25.457Z",
+        "updateId": 19,
+        "team": "away",
+        "teamName": "Chinandega FC",
+        "matchTime": 5,
+        "elapsedRegularTime": 5,
+        "type": "Goal",
+        "updateType": "Goal"
+      },
+      {
+        "updateTime": "2020-04-05T22:46:21.621Z",
+        "updateId": 86,
+        "team": "home",
+        "teamName": "ART Municipal Jalapa",
+        "matchTime": 43,
+        "elapsedRegularTime": 43,
+        "type": "YellowCard",
+        "updateType": "YellowCard"
+      },
+      {
+        "updateTime": "2020-04-05T22:48:14.900Z",
+        "updateId": 90,
+        "team": "home",
+        "teamName": "ART Municipal Jalapa",
+        "matchTime": 45,
+        "elapsedRegularTime": 45,
+        "type": "YellowCard",
+        "updateType": "YellowCard"
+      },
+      {
+        "updateTime": "2020-04-05T22:48:54.253Z",
+        "updateId": 94,
+        "team": "away",
+        "teamName": "Chinandega FC",
+        "matchTime": 46,
+        "elapsedRegularTime": 45,
+        "elapsedAddedTime": 1,
+        "type": "YellowCard",
+        "updateType": "YellowCard"
+      },
+      {
+        "updateTime": "2020-04-05T22:49:51.035Z",
+        "updateId": 98,
+        "matchTime": 47,
+        "elapsedRegularTime": 45,
+        "elapsedAddedTime": 2,
+        "type": "FirstHalfEnd",
+        "updateType": "FirstHalfEnd"
+      },
+      {
+        "updateTime": "2020-04-05T23:04:52.044Z",
+        "updateId": 99,
+        "matchTime": 46,
+        "elapsedRegularTime": 46,
+        "type": "SecondHalfKickOff",
+        "updateType": "SecondHalfKickOff"
+      }
+    ],
+    "status": "IN_PLAY",
+    "inPlayMatchStatus": "SecondHalfKickOff"
+  }
+]
