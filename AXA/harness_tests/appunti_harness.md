@@ -23,7 +23,8 @@ Si seleziona nella colonna a sinistra Pipelines e poi se ne crea una nuova.
       * Image: artifactory.platform.axaxl-cloud.com/docker/library/python:3.8
       * Shell: Bash
       * Command: (vedi esempi per altri) |
-        ```python -m venv databricks_env
+        ```
+        python -m venv databricks_env
         . databricks_env/bin/activate
         pip install -r requirements_test.txt
         pip install databricks-cli
@@ -33,7 +34,8 @@ Si seleziona nella colonna a sinistra Pipelines e poi se ne crea una nuova.
         
 ### Esempi su come costruire processi harness per CI/CD
 Demo pytest
-```python -m venv broker_env
+```
+python -m venv broker_env
 . broker_env/bin/activate
 pip install -U pytest databricks-cli
 export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
@@ -45,7 +47,8 @@ databricks jobs delete --job-id $Jobid
 ```
 
 Preprare training
-```python -m venv broker_env
+```
+python -m venv broker_env
 . broker_env/bin/activate
 pip install databricks-cli
 export TAG=<+trigger.payload.release.tag_name>
@@ -60,7 +63,8 @@ sed -i -e "s/{DEPLOY_ENV}/prod/g" jobs/create_training_pipeline.json
 ```
 
 Deploy training
-```python -m venv broker_env
+```
+python -m venv broker_env
 . broker_env/bin/activate
 export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
 export DATABRICKS_HOST=<+variable.databricks_prod_host>
@@ -79,7 +83,8 @@ Testing -> Deploying training pipeline
 
 Testing step
  * buildEnvironment
-   ```python -m venv test_env
+   ```
+   python -m venv test_env
    . broker_env/bin/activate
    pip install --upgrade pip
    pip install -r requirements.txt
@@ -87,34 +92,37 @@ Testing step
    pip install -U pytest databricks-cli
    ```
  * installPackage
-   ```. broker_env/bin/activate
+   ```
+   . broker_env/bin/activate
    # pip install
    ```
  * unitTests
-  ```. test_env/bin/activate
-  export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
-  export DATABRICKS_HOST=<+variable.databricks_prod_host>
-  Jobid=$(databricks job create --json-file tests/create_test_job.json | grep -i "job_id" | cut -d: -f 2)
-  echo $Jobid
-  if [ ! -n "$Jobid" ]
-  then
-   echo "Error: Runid not set or NULL"
-   echo "check job definition"
-   exit 1
-  fi
-  CONTR="TERMINATED"
-  STATUS=$(databricks runs get-output --run-id $Runid | grep -i "life_cycle_state" | cut -d: -f 2 | cut -d'"' -f 2)
-  until [ "$STATUS" == "$CONTR" ]; do
-   sleep 5
+   ```
+   . test_env/bin/activate
+   export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
+   export DATABRICKS_HOST=<+variable.databricks_prod_host>
+   Jobid=$(databricks job create --json-file tests/create_test_job.json | grep -i "job_id" | cut -d: -f 2)
+   echo $Jobid
+   if [ ! -n "$Jobid" ]
+   then
+    echo "Error: Runid not set or NULL"
+    echo "check job definition"
+    exit 1
+   fi
+   CONTR="TERMINATED"
    STATUS=$(databricks runs get-output --run-id $Runid | grep -i "life_cycle_state" | cut -d: -f 2 | cut -d'"' -f 2)
-   echo $STATUS
-  done
-  databricks jobs delete --job-id $Jobid
-  echo DONE
-  # pytest tests/unit --junitxml=unit_tests.xml
-  ```
+   until [ "$STATUS" == "$CONTR" ]; do
+    sleep 5
+    STATUS=$(databricks runs get-output --run-id $Runid | grep -i "life_cycle_state" | cut -d: -f 2 | cut -d'"' -f 2)
+    echo $STATUS
+   done
+   databricks jobs delete --job-id $Jobid
+   echo DONE
+   # pytest tests/unit --junitxml=unit_tests.xml
+   ```
  * integrationTests
-   ```. test_env/bin/activate
+   ```
+   . test_env/bin/activate
    # pytest tests/integration --junitxml=integration_tests.xml
    ```
 * Training step
