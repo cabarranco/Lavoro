@@ -1,0 +1,65 @@
+# Databricks notebook source
+# MAGIC %pip install pyyaml
+# MAGIC %pip install /dbfs/FileStore/Utils/Utils-0.1-py3-none-any.whl
+
+# COMMAND ----------
+
+import os
+# Move to correct folder
+try:
+  spark.conf.set("current_path", dbutils.notebook.entry_point.gedDbutils().notebook().getContext().notebookPath().get())
+  current_path = '/Workspace'+os.path.dirname(spark.conf.get('current_path'))
+  os.chdir(current_path)
+  os.chdir('../..')
+except Exception as e:
+  print(e)
+
+# COMMAND ----------
+
+import json
+import datetime as dt
+import warnings
+from src.bundle_test.arguments import arguments
+from Utils.initialise import get_args_and_conf, set_logger, close_logger
+from Utils.file_utils import create_directory
+warnings.filerwarnings("ignore")
+
+# COMMAND ----------
+
+t0 = dt.datetime.now()
+
+# import job arguments and config
+job_args, config = get_args_and_conf(arguments, dbutils, getArgument)
+
+# set logger
+logger = set_logger(job_args, config)
+logger.info("started")
+
+# get metadata info
+logger.info(f"running from {os.getcwd()}")
+try:
+  with open("../state/metadata.json") as file:
+    metadata = json.load(file)
+  logger.info(f"Repository: {metadata['config']['bundle']['git']['origin_url']}")
+  logger.info(f"Branch: {metadata['config']['bundle']['git']['branch']}")
+  logger.info(f"Commit: {metadata['config']['bundle']['git']['commit']}")
+except Exception as e:
+  logger.error(e)
+
+# COMMAND ----------
+
+msg = "Completed"
+logger.info(msg)
+
+close_logger(job_args, config)
+t1 = dt.datetime.now()
+msg = msg+f"""
+started at {t0}
+ended at {t1}"""
+dbutils.notebook.exit(msg)
+
+
+
+
+
+  
