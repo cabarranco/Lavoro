@@ -1,0 +1,25 @@
+# This is a Databricks asset bundle definition for default_python.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation
+bundle:
+  name: bundle_test
+
+include:
+  - jobs/*.json
+
+targets:
+  prod:
+    mode: production
+    default: False
+    workspace:
+      host: https://adb-3428697504158163.3.azuredatabricks.net/
+      root_path: /Shared/.bundle/${bundle.name}
+    run_as:
+      user_name: bla.bla@dom.com
+  preprod:
+    mode: development
+    default: True
+    workspace:
+      host: https://adb-3428697504158163.3.azuredatabricks.net/
+      root_path: /Users/${workspace.current_user.userName}/${bundle.name}
+    run_as:
+      user_name: bla.bla@dom.com
