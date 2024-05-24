@@ -35,8 +35,8 @@ Si seleziona nella colonna a sinistra Pipelines e poi se ne crea una nuova.
 ### Esempi su come costruire processi harness per CI/CD
 Demo pytest
 ```
-python -m venv broker_env
-. broker_env/bin/activate
+python -m venv test_env
+. test_env/bin/activate
 pip install -U pytest databricks-cli
 export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
 export DATABRICKS_HOST=<+variable.databricks_prod_host>
@@ -48,8 +48,8 @@ databricks jobs delete --job-id $Jobid
 
 Preprare training
 ```
-python -m venv broker_env
-. broker_env/bin/activate
+python -m venv deploy_env
+. deploy_env/bin/activate
 pip install databricks-cli
 export TAG=<+trigger.payload.release.tag_name>
 if [[ ! -n "$TAG" || TAG==null ]]
@@ -64,8 +64,8 @@ sed -i -e "s/{DEPLOY_ENV}/prod/g" jobs/create_training_pipeline.json
 
 Deploy training
 ```
-python -m venv broker_env
-. broker_env/bin/activate
+python -m venv deploy_env
+. deploy_env/bin/activate
 export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
 export DATABRICKS_HOST=<+variable.databricks_prod_host>
 # remove previous version of the job
@@ -85,7 +85,7 @@ Testing step
  * buildEnvironment
    ```
    python -m venv test_env
-   . broker_env/bin/activate
+   . test_env/bin/activate
    pip install --upgrade pip
    pip install -r requirements.txt
    pip install -r requirements_test.txt
@@ -93,7 +93,7 @@ Testing step
    ```
  * installPackage
    ```
-   . broker_env/bin/activate
+   . test_env/bin/activate
    # pip install
    ```
  * unitTests
@@ -130,7 +130,7 @@ Testing step
  * prepare
    ```
    python -m venv deploy_env
-   . broker_env/bin/activate
+   . deploy_env/bin/activate
    pip install pytest databricks-cli
    export TAG=<+trigger.payload.release.tag_name>
    if [[ ! -n "$TAG" || TAG==null ]]
@@ -142,9 +142,9 @@ Testing step
    fi
    sed -i -e "s/{DEPLOY_ENV}/prod/g" jobs/create_training_pipeline.json
    ```
- * deplot
+ * deploy
    ```
-   . broker_env/bin/activate
+   . deploy_env/bin/activate
    export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
    export DATABRICKS_HOST=<+variable.databricks_prod_host>
    # remove previous version of the job
@@ -156,3 +156,50 @@ Testing step
    done
    databricks jobs create --json-file jobs/create_training_pipeline.json
    ```
+
+## Altro esempio semplice
+Creare manualmente il job per il test (e il notebook) e nel CD?CI farlo girare con il numero grep dal nome {progetto}_test.
+
+```
+# create and run test job
+python -m venv test_env
+. test_env/bin/activate
+pip install -U pytest databricks-cli
+export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
+export DATABRICKS_HOST=<+variable.databricks_prod_host>
+Jobid=$(databricks job create --json-file create_test_job.json | grep -i "job_id" | cut -d: -f 2)
+echo $Jobid
+databricks jobs run-now --job-id $Jobid
+
+# delete test job
+python -m venv deploy_env
+. deploy_env/bin/activate
+pip install -U pytest databricks-cli
+export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
+export DATABRICKS_HOST=<+variable.databricks_prod_host>
+Jobid=$(databricks job list | grep -i "harness_test" | cut -d" " -f 1)
+echo $Jobid
+databricks jobs run-now --job-id $Jobid
+
+# find jobs
+python -m venv broker_env
+. broker_env/bin/activate
+pip install -U pytest databricks-cli
+export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
+export DATABRICKS_HOST=<+variable.databricks_prod_host>
+Jobid=$(databricks job create --json-file create_test_job.json | grep -i "job_id" | cut -d: -f 2)
+echo $Jobid
+Runid=$(databricks jobs run-now --job-id $Jobid | grep -i "number_in_job" | cut -d: -f 2)
+echo $Runid
+STATUS=$(databricks runs get-output --run-id $Runid | grep -i "life_cycle_state" | cut -d: -f 2 | cut -d'"' -f 2)
+# # Equality Comparison
+# if [ "$STATUS" == "$CONTR" ]; then
+#  echo "Status = TERMINATED"
+# fi
+until [ "$STATUS" == "$CONTR" ]; do
+ sleep 1
+ STATUS=$(databricks run get-output --run-id $Runid | grep -i "life_cycle_state" | cut -d: -f 2 | cut -d, -f 1)
+ echo $STATUS
+done
+databricks jobs delete --job-id $Jobid
+```
