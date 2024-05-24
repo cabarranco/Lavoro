@@ -125,6 +125,34 @@ Testing step
    . test_env/bin/activate
    # pytest tests/integration --junitxml=integration_tests.xml
    ```
-* Training step
-
-
+ 
+ Training step
+ * prepare
+   ```
+   python -m venv deploy_env
+   . broker_env/bin/activate
+   pip install pytest databricks-cli
+   export TAG=<+trigger.payload.release.tag_name>
+   if [[ ! -n "$TAG" || TAG==null ]]
+   then
+    echo "No tag"
+   else
+    sed -i -e "s/git_branch/git_tag/g" jobs/create_training_pipeline.json
+    sed -1 -e "s/main/${TAG}/g" jobs/create_training_pipeline.json
+   fi
+   sed -i -e "s/{DEPLOY_ENV}/prod/g" jobs/create_training_pipeline.json
+   ```
+ * deplot
+   ```
+   . broker_env/bin/activate
+   export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
+   export DATABRICKS_HOST=<+variable.databricks_prod_host>
+   # remove previous version of the job
+   Jobname=blbla_training
+   Jobid=$(databricks job list | grep -ml -w $Jobname | cut -f 1 -d " ")
+   until [ ! -n "$Jobid" ]; do
+    databricks jobs delete --job-id $Jobid
+    Jobid=$(databricks job list | grep -ml -w $Jobname | cut -f 1 -d " ")
+   done
+   databricks jobs create --json-file jobs/create_training_pipeline.json
+   ```
