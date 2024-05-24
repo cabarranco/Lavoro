@@ -26,7 +26,7 @@ def choose_boundary() -> str:
     return binascii.hexlify(os.urandom(16)).decode()
 
 
-def iter_field(fields: _TYPE_FIELDS) -> typing.Iterable[RequestField]:
+def iter_fields(fields: _TYPE_FIELDS) -> typing.Iterable[RequestField]:
     """
     Iterate over fields.
 
@@ -66,7 +66,7 @@ def encode_multipart_formdata(
     if boundary is None:
         boundary = choose_boundary()
 
-    for field in iter_field(fields):
+    for field in iter_fields(fields):
         body.write(f"--{boundary}\r\n".encode("latin-1"))
 
         writer(body).write(field.render_headers())
