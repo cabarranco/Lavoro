@@ -15,7 +15,7 @@ Si seleziona nella colonna a sinistra Pipelines e poi se ne crea una nuova.
     * Namespace: builds-shared-axa-xl
   * Advanced: ConditionalExecution: <+trigger.targetBranch>=="main" (or <+<+trigger.targetBranch.contains("refs")>?false:true>)
   * Execution:
-    define each step
+    * define each step
       * type: Run
       * name: ...
       * description: ...
@@ -23,15 +23,54 @@ Si seleziona nella colonna a sinistra Pipelines e poi se ne crea una nuova.
       * Image: artifactory.platform.axaxl-cloud.com/docker/library/python:3.8
       * Shell: Bash
       * Command: (vedi esempi per altri) |
-        python -m venv databricks_env
-        . databricks_env/bin/activate
-        pip install -r requirements_test.txt
-        pip install databricks-cli
-        export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
-        export DATABRICKS_HOST=<+variable.databricks_prod_host>
-        databricks job create --json-file jobs/create_pipeline.json
+        * python -m venv databricks_env
+        * . databricks_env/bin/activate
+        * pip install -r requirements_test.txt
+        * pip install databricks-cli
+        * export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
+        * export DATABRICKS_HOST=<+variable.databricks_prod_host>
+        * databricks job create --json-file jobs/create_pipeline.json
         
 ## Esempi su come costruire processi harness per CI/CD
+Demo pytest
+* python -m venv broker_env
+* . broker_env/bin/activate
+* pip install -U pytest databricks-cli
+* export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
+* export DATABRICKS_HOST=<+variable.databricks_prod_host>
+* Jobid=$(databricks job create --json-file create_test_job.json | grep -i "job_id" | cut -d: -f 2)
+* echo $Jobid
+* databricks jobs run-now --job-id $Jobid
+* databricks jobs delete --job-id $Jobid
+
+Preprare training
+* python -m venv broker_env
+* . broker_env/bin/activate
+* pip install databricks-cli
+* export TAG=<+trigger.payload.release.tag_name>
+* if [[ ! -n "$TAG" || TAG==null ]]
+* then
+*  echo "No tag"
+* else
+*  sed -i -e "s/git_branch/git_tag/g" jobs/create_training_pipeline.json
+*  sed -i -e "s/main/${TAG}/g" jobs/create_training_pipeline.json
+* fi
+* sed -i -e "s/{DEPLOY_ENV}/prod/g" jobs/create_training_pipeline.json
+
+Deploy training
+* python -m venv broker_env
+* . broker_env/bin/activate
+* export DATABRICKS_TOKEN=<+secrets.getValue("cb_db_prd_token")>
+* export DATABRICKS_HOST=<+variable.databricks_prod_host>
+* `# remove previous version of the job`
+* Jobname=blbla_training
+* Jobid=$(databricks job list | grep -ml -w $Jobname | cut -f 1 -d " ")
+* until [ ! -n "$Jobid" ]; do
+*  databricks jobs delete --job-id $Jobid
+*  Jobid=$(databricks job list | grep -ml -w $Jobname | cut -f 1 -d " ")
+* done
+* databricks jobs create --json-file jobs/create_training_pipeline.json
+
 
 
 
