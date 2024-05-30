@@ -1,0 +1,2 @@
+This file comes from anaconda3/lib/python3.7/site-packages/urllib3
+It had a typo that caused a bug, the fix was to replace iter_field_objects with iter_fields.
