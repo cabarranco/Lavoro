@@ -18,7 +18,7 @@ This repository acts as a template for jobs to be deployed on Databricks
 
 This template is created using cookiecutter. To make use of this you'll need to have a python virtual environment wwith cookiecutter inbstalled.
 
-Please refer to [this page](https://github.com/cabarranco/Lavoro/new/main/AppuntiVari/environments/notes.md) for instructions on setting up a python environment.
+Please refer to [this page](https://github.com/cabarranco/Lavoro/new/main/AppuntiVari/guide/setting_up_dev_container.md) for instructions on setting up a python environment.
 
 Once your environment is created you'll need to install cookiecutter
 
