@@ -1,0 +1,7 @@
+{
+  "project_name": "test_project",
+  "repo_name": "{{cookiecutter.project_name.lower().replace(' ', '_')}}",
+  "version": "0.1.0",
+  "author": "Your name",
+  "author_email": "{{cookiecutter.author.lowr().replace(' ', '_')}}@dom.com"
+}
